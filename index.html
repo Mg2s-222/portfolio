@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>马潇 · 空间设计师</title>
+
+  <!-- ==================== 1. Premium Fonts ==================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ============================================================
+       🎨 DESIGN SYSTEM — Editorial Luxury Portfolio
+       Design Read: Solo designer portfolio, editorial luxury language
+       Dials: VARIANCE 6 / MOTION 5 / DENSITY 3
+       ============================================================ */
+
+    /* ---------- CSS Variables ---------- */
+    :root {
+      /* Warm paper palette */
+      --color-bg:            #faf9f7;
+      --color-surface:       #f3f1ed;
+      --color-surface-alt:   #ece9e3;
+      --color-border:        #e5e2dc;
+      --color-border-light:  #efede9;
+      --color-text:          #1c1917;
+      --color-text-muted:    #78716c;
+      --color-text-soft:     #a8a29e;
+
+      /* Refined accent system — desaturated, sophisticated */
+      --accent-graphic:      #4b7cb5;
+      --accent-space:        #b8860b;
+      --accent-product:      #3b8b6b;
+      --accent-interior:     #c4628b;
+      --color-accent:        #4b7cb5;
+
+      /* Typography */
+      --font-heading: 'Playfair Display', 'Noto Serif SC', 'Source Han Serif SC', serif;
+      --font-body:    'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+      /* Spacing scale */
+      --space-section: 6rem;
+
+      /* Radius */
+      --radius-card:   1.25rem;
+      --radius-pill:   9999px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 350;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ---------- Subtle paper texture overlay ---------- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+      opacity: 0.6;
+    }
+
+    /* ---------- Typography ---------- */
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* ---------- Scrollbar ---------- */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #d6d3ce; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #b8b4ae; }
+
+    /* ---------- Accent utility classes ---------- */
+    .text-accent-graphic  { color: var(--accent-graphic); }
+    .text-accent-space    { color: var(--accent-space); }
+    .text-accent-product  { color: var(--accent-product); }
+    .text-accent-interior { color: var(--accent-interior); }
+    .bg-accent-graphic    { background-color: var(--accent-graphic); }
+    .bg-accent-space      { background-color: var(--accent-space); }
+    .bg-accent-product    { background-color: var(--accent-product); }
+    .bg-accent-interior   { background-color: var(--accent-interior); }
+
+    /* ============================================================
+       NAVIGATION — Floating Glass Pill
+       ============================================================ */
+    .nav-pill {
+      position: fixed;
+      top: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      background: rgba(250, 249, 247, 0.78);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+      box-shadow: 0 1px 3px rgba(28, 25, 23, 0.04), 0 8px 24px rgba(28, 25, 23, 0.05);
+      transition: box-shadow 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+                  border-color 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .nav-pill.scrolled {
+      border-color: #d1cdc6;
+      box-shadow: 0 1px 2px rgba(28, 25, 23, 0.06), 0 12px 32px rgba(28, 25, 23, 0.08);
+    }
+
+    .nav-link {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-pill);
+      transition: all 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+      white-space: nowrap;
+      position: relative;
+    }
+    .nav-link:hover {
+      color: var(--color-text);
+      background: rgba(28, 25, 23, 0.05);
+    }
+    .nav-link.active {
+      color: var(--color-text);
+      background: rgba(28, 25, 23, 0.07);
+    }
+
+    /* Mobile: simplified nav */
+    @media (max-width: 767px) {
+      .nav-pill {
+        top: 0.75rem;
+        padding: 0.4rem 0.6rem;
+        gap: 0;
+      }
+      .nav-link {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.55rem;
+        letter-spacing: 0.03em;
+      }
+    }
+
+    /* ============================================================
+       DOUBLE-BEZEL CARDS — Nested architecture (Section 4.A)
+       ============================================================ */
+    .card-shell {
+      position: relative;
+      background: var(--color-surface-alt);
+      border: 1px solid var(--color-border-light);
+      border-radius: calc(var(--radius-card) + 0.35rem);
+      padding: 0.35rem;
+      transition: all 0.7s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .card-shell:hover {
+      background: #e2ded8;
+      border-color: #d5d0c8;
+      box-shadow: 0 2px 6px rgba(28, 25, 23, 0.04), 0 16px 40px rgba(28, 25, 23, 0.07);
+    }
+
+    .card-core {
+      background: #fff;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: all 0.7s cubic-bezier(0.32, 0.72, 0, 1);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    }
+    .card-shell:hover .card-core {
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Bento grid — asymmetric card sizes */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.25rem;
+      grid-auto-rows: auto;
+      grid-auto-flow: dense;
+    }
+    .bento-grid .bento-item {
+      min-width: 0;
+    }
+    /* Varied col-spans for visual rhythm */
+    .bento-grid .bento-item:nth-child(3n+1) { grid-column: span 7; }
+    .bento-grid .bento-item:nth-child(3n+2) { grid-column: span 5; }
+    .bento-grid .bento-item:nth-child(3n+3) { grid-column: span 6; }
+    .bento-grid .bento-item:nth-child(5n+4) { grid-column: span 6; }
+
+    @media (max-width: 767px) {
+      .bento-grid .bento-item { grid-column: span 12 !important; }
+      .bento-grid { gap: 1rem; }
+      .card-shell { padding: 0.25rem; }
+    }
+
+    /* ============================================================
+       IMAGE HOVER — Gentle scale with luminosity shift
+       ============================================================ */
+    .img-wrapper {
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      position: relative;
+      cursor: pointer;
+    }
+    .img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.32, 0.72, 0, 1),
+                  filter 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .card-shell:hover .img-wrapper img {
+      transform: scale(1.03);
+      filter: brightness(1.04);
+    }
+
+    /* ============================================================
+       SKILL TAGS — Refined pill design
+       ============================================================ */
+    .skill-tag {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 450;
+      letter-spacing: 0.02em;
+      color: var(--color-text-muted);
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 0.9rem;
+      transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+      cursor: default;
+      user-select: none;
+    }
+    .skill-tag:hover {
+      color: #fff;
+      background: var(--color-text);
+      border-color: var(--color-text);
+      transform: translateY(-1px);
+    }
+
+    /* ============================================================
+       BUTTONS — Refined outline style
+       ============================================================ */
+    .btn-outline {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--color-text-muted);
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 1.25rem;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .btn-outline:hover {
+      color: #fff;
+      background: var(--color-text);
+      border-color: var(--color-text);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(28, 25, 23, 0.12);
+    }
+    .btn-outline:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       AVATAR — Double-ring treatment
+       ============================================================ */
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+    }
+    .avatar-outer-ring {
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, var(--color-border) 0%, var(--color-surface-alt) 100%);
+      box-shadow: 0 2px 12px rgba(28, 25, 23, 0.06);
+    }
+    .avatar-inner {
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #fff;
+      box-shadow: 0 1px 3px rgba(28, 25, 23, 0.08);
+    }
+
+    /* ============================================================
+       SECTION ACCENT LINE — Refined indicator
+       ============================================================ */
+    .accent-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .accent-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .accent-line {
+      width: 18px;
+      height: 2px;
+      border-radius: 1px;
+    }
+
+    /* ============================================================
+       DIVIDERS — Elegant dot row
+       ============================================================ */
+    .divider-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .divider-dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--color-border);
+    }
+    .divider-dots span:first-child {
+      background: var(--color-text-muted);
+    }
+
+    /* ============================================================
+       SCROLL ENTRY ANIMATIONS (Section 5.C)
+       Animate ONLY transform + opacity
+       ============================================================ */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.32, 0.72, 0, 1),
+                  transform 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .reveal-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Staggered children */
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.32, 0.72, 0, 1),
+                  transform 0.7s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 80ms; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
+    .reveal-stagger.visible > *:nth-child(n+6) { transition-delay: 380ms; opacity: 1; transform: translateY(0); }
+
+    /* ============================================================
+       LIGHTBOX — Refined overlay
+       ============================================================ */
+    #lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(28, 25, 23, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    #lightbox-overlay.show { display: flex; }
+    #lightbox-overlay img {
+      max-width: 92vw;
+      max-height: 82vh;
+      border-radius: 12px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+    }
+    #lightbox-overlay .lightbox-caption {
+      color: #b8b4ae;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 350;
+      text-align: center;
+      max-width: 520px;
+      letter-spacing: 0.02em;
+    }
+
+    /* QR overlay */
+    #qr-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(28, 25, 23, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    #qr-overlay.show { display: flex; }
+    #qr-overlay img { max-width: 90vw; max-height: 90vh; border-radius: 16px; }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    html { scroll-behavior: smooth; }
+
+    @media (max-width: 767px) {
+      :root { --space-section: 3.5rem; }
+      body { font-size: 0.925rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION — Floating Glass Pill ==================== -->
+  <nav class="nav-pill" id="nav-pill" role="navigation" aria-label="主导航">
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--accent-graphic);margin:0 0.5rem 0 0.3rem;flex-shrink:0;"></span>
+    <span style="font-family:var(--font-heading);font-weight:600;font-size:0.85rem;letter-spacing:0.04em;color:var(--color-text);margin-right:0.5rem;white-space:nowrap;" id="nav-brand">马潇</span>
+    <!-- Nav anchors generated by JS -->
+    <span id="nav-links" style="display:flex;align-items:center;gap:0.1rem;"></span>
+  </nav>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main style="max-width:1200px;margin:0 auto;padding:5rem 1.5rem 0;">
+
+    <!-- ===== HERO: Two-column editorial layout ===== -->
+    <div style="display:grid;grid-template-columns:1fr;gap:0;align-items:end;padding:2.5rem 0 3rem;"
+         class="md:grid-cols-[1fr_auto] md:gap-12 md:py-16 md:pb-20">
+      <!-- Left: Name + Title -->
+      <div>
+        <div style="margin-bottom:1.25rem;">
+          <span style="display:inline-block;padding:0.2rem 0.75rem;border-radius:var(--radius-pill);font-size:0.65rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-graphic);background:rgba(75,124,181,0.08);border:1px solid rgba(75,124,181,0.15);">
+            Portfolio 2026
+          </span>
+        </div>
+        <h1 style="font-family:var(--font-heading);font-weight:700;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1.15;letter-spacing:-0.02em;margin-bottom:0.5rem;" class="reveal-up">
+          马潇
+        </h1>
+        <p style="font-family:var(--font-body);font-size:1.05rem;font-weight:450;letter-spacing:0.06em;color:var(--accent-graphic);margin-bottom:1.25rem;" class="reveal-up">
+          空间设计师
+        </p>
+        <div class="divider-dots reveal-up" style="margin-bottom:1.5rem;">
+          <span></span><span></span><span></span>
+        </div>
+        <p style="font-size:0.9rem;color:var(--color-text-muted);max-width:480px;line-height:1.8;font-weight:350;" class="reveal-up" id="hero-bio">
+          专注于视觉传达与空间美学，追求功能与艺术的平衡。<br>6 年行业经验，服务超过 50+ 品牌客户。
+        </p>
+      </div>
+      <!-- Right: Avatar -->
+      <div style="display:flex;justify-content:center;" class="reveal-up md:justify-end">
+        <div class="avatar-container">
+          <div class="avatar-outer-ring">
+            <div class="avatar-inner" style="width:clamp(120px,18vw,152px);height:clamp(120px,18vw,152px);">
+              <img id="avatar-img" src="https://placehold.co/400x400/f0f0f0/999?text=Avatar" alt="马潇的头像"
+                   style="width:100%;height:100%;object-fit:cover;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CONTENT GRID: Sidebar + Works ===== -->
+    <div style="display:grid;grid-template-columns:1fr;gap:3rem;"
+         class="lg:grid-cols-[280px_1fr] lg:gap-10">
+
+      <!-- ========== SIDEBAR ========== -->
+      <aside style="position:relative;">
+
+        <!-- Bio block (sticky on desktop) -->
+        <div style="position:sticky;top:7rem;">
+          <!-- Bio section -->
+          <div style="margin-bottom:2.5rem;" class="reveal-up">
+            <p style="font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-soft);margin-bottom:0.75rem;">关于 · About</p>
+            <p style="font-size:0.875rem;color:var(--color-text-muted);line-height:1.85;font-weight:350;" id="sidebar-bio">
+              专注于视觉传达与空间美学，追求功能与艺术的平衡。<br>6 年行业经验，服务超过 50+ 品牌客户。
+            </p>
+          </div>
+
+          <!-- Skills -->
+          <div style="margin-bottom:2.5rem;" class="reveal-up">
+            <p style="font-size:0.82rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-soft);margin-bottom:0.85rem;">技能 · Skills</p>
+            <div style="display:flex;flex-wrap:wrap;gap:0.45rem;" id="skills-container">
+              <!-- JS populated -->
+            </div>
+          </div>
+
+          <!-- QR Contact card — double-bezel -->
+          <div class="card-shell reveal-up">
+            <div class="card-core" style="padding:1.25rem;text-align:center;">
+              <p style="font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-soft);margin-bottom:0.85rem;">联系我 · Contact</p>
+              <img id="qr-image" src="https://placehold.co/300x300/f0f0f0/999?text=QR" alt="二维码"
+                   style="width:140px;margin:0 auto;display:block;border-radius:10px;cursor:pointer;border:1px solid var(--color-border-light);"
+                   title="点击放大预览">
+              <p style="font-size:0.72rem;color:var(--color-text-soft);margin-top:0.75rem;margin-bottom:0.85rem;" id="qr-guide-text">扫码添加微信</p>
+              <button id="btn-zoom-qr" class="btn-outline" style="font-size:0.7rem;padding:0.35rem 1rem;">
+                放大预览
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ========== WORKS AREA ========== -->
+      <section>
+        <!-- Section heading -->
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem;" class="reveal-up">
+          <h2 style="font-family:var(--font-heading);font-weight:600;font-size:1.5rem;letter-spacing:0.02em;white-space:nowrap;">作品集 · Portfolio</h2>
+          <span style="flex:1;height:1px;background:var(--color-border);"></span>
+        </div>
+
+        <!-- Categories container -->
+        <div id="categories-container">
+          <!-- JS populated -->
+        </div>
+
+        <!-- Empty state -->
+        <div id="categories-empty" style="display:none;text-align:center;padding:5rem 2rem;border-radius:var(--radius-card);background:var(--color-surface);border:1px dashed var(--color-border);">
+          <p style="font-size:0.9rem;color:var(--color-text-muted);">暂无作品板块，请添加内容</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer style="margin-top:var(--space-section);border-top:1px solid var(--color-border);background:var(--color-surface);padding:2.5rem 1.5rem;text-align:center;">
+    <p style="font-size:0.75rem;font-weight:400;color:var(--color-text-soft);letter-spacing:0.04em;">
+      © <span id="footer-year">2026</span> <span id="footer-name">马潇</span>. All Rights Reserved.
+    </p>
+  </footer>
+
+  <!-- ==================== OVERLAYS ==================== -->
+  <div id="qr-overlay"><img id="qr-overlay-img" src="" alt="二维码大图"></div>
+  <div id="lightbox-overlay">
+    <img id="lightbox-img" src="" alt="作品大图">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+  (function () {
+    // ============================================================
+    //  DATA — Same structure, keep your content
+    // ============================================================
+    const DATA = {
+      headerName: '马潇',
+
+      profile: {
+        avatar:  'images/avatar.jpg',
+        name: '马潇',
+        title: '空间设计师',
+        bio: '专注于视觉传达与空间美学，追求功能与艺术的平衡环境设计应届毕业生，兼具空间设计功底与AIGC视觉创作能力。拥有家装、景观、工装三段实操实习，精通AI绘图工具做概念渲染、视觉插画、方案可视化，擅长结合空间逻辑产出创意视觉作品。',
+      },
+
+      skills: ['Photoshop', 'Illustrator', 'InDesign', 'SketchUp', 'Blender', 'Premiere', 'After Effects', '排版'],
+
+      qrCode: {
+        image:  'images/qrcode.jpg',
+        guideText: '扫码添加微信',
+      },
+
+      categories: [
+        {
+          id: 'graphic-design',
+          name: '平面设计',
+          description: '品牌视觉、海报、画册、包装等平面创意作品',
+          accentClass: 'graphic',
+          works: [
+            { title: '山居 · 民宿品牌视觉', thumb: 'https://placehold.co/800x600/f2efe9/4b7cb5?text=Graphic+01', description: '为高端民宿品牌打造全套 VI 系统，包含 Logo 设计、字体规范、色彩体系及应用延展。', link: '' },
+            { title: '春日茶叙 · 包装设计', thumb: 'https://placehold.co/800x600/eae5dd/4b7cb5?text=Graphic+02', description: '茶叶礼盒包装设计，融合中国传统水墨元素与现代极简风格。', link: '' },
+            { title: '城市音乐节 · 海报系列', thumb: 'https://placehold.co/800x600/f5f2ee/4b7cb5?text=Graphic+03', description: '为年度城市音乐节创作的主视觉海报及衍生宣传物料。', link: '' },
+          ],
+        },
+        {
+          id: 'space-design',
+          name: '空间设计',
+          description: '展示空间、商业空间、展览空间的规划与设计',
+          accentClass: 'space',
+          works: [
+            { title: '光影之间 · 艺术展厅', thumb: 'https://placehold.co/800x600/f5f0e3/b8860b?text=Space+01', description: '500㎡ 当代艺术展厅空间规划，以光影变化引导观展流线。', link: '' },
+            { title: '未来办公 · 共享空间', thumb: 'https://placehold.co/800x600/f8f4eb/b8860b?text=Space+02', description: '为科技公司设计的灵活共享办公空间，兼顾协作与专注需求。', link: '' },
+            { title: '归园 · 茶空间设计', thumb: 'https://placehold.co/800x600/faf6ef/b8860b?text=Space+03', description: '以"归"为概念的茶室空间，营造静谧安然的品茗氛围。', link: '' },
+          ],
+        },
+        {
+          id: 'product-display',
+          name: '产品展示设计',
+          description: '产品展台、陈列道具、快闪店等展示方案设计',
+          accentClass: 'product',
+          works: [
+            { title: '极光 · 美妆展台', thumb: 'https://placehold.co/800x600/e8f2ec/3b8b6b?text=Product+01', description: '为国际美妆品牌设计的商场中岛展台，亚克力与金属的碰撞。', link: '' },
+            { title: '轻 · 3C 产品陈列道具', thumb: 'https://placehold.co/800x600/f0f6f2/3b8b6b?text=Product+02', description: '极简风格手机/穿戴设备陈列道具系统，模块化组合灵活适配。', link: '' },
+          ],
+        },
+        {
+          id: 'interior-design',
+          name: '室内设计',
+          description: '住宅、商业、办公等室内空间的全案设计',
+          accentClass: 'interior',
+          works: [
+            { title: '素 · 现代住宅', thumb: 'https://placehold.co/800x600/f6eff3/c4628b?text=Interior+01', description: '180㎡ 平层住宅全案设计，白色基调搭配原木与棉麻材质。', link: '' },
+            { title: '暮光 · 餐厅设计', thumb: 'https://placehold.co/800x600/faf3f6/c4628b?text=Interior+02', description: '新式融合餐厅室内设计，暖色调灯光营造亲密用餐氛围。', link: '' },
+            { title: '云栖 · 酒店客房', thumb: 'https://placehold.co/800x600/f8eff3/c4628b?text=Interior+03', description: '精品酒店客房设计，以"云端栖息"为灵感，打造轻盈舒适的入住体验。', link: '' },
+          ],
+        },
+      ],
+
+      footerName: '马潇',
+      footerYear: new Date().getFullYear(),
+    };
+
+    // ============================================================
+    //  RENDER FUNCTIONS
+    // ============================================================
+
+    function renderHeader() {
+      document.getElementById('nav-brand').textContent = DATA.headerName;
+      const navLinks = document.getElementById('nav-links');
+      navLinks.innerHTML = DATA.categories.map(cat =>
+        `<a href="#section-${cat.id}" class="nav-link" data-nav="${cat.id}">${escapeHTML(cat.name)}</a>`
+      ).join('');
+    }
+
+    function renderProfile() {
+      const p = DATA.profile;
+      document.getElementById('avatar-img').src = p.avatar;
+      document.getElementById('avatar-img').alt = p.name + ' 的头像';
+      document.getElementById('hero-bio').innerHTML = p.bio;
+      document.getElementById('sidebar-bio').innerHTML = p.bio.replace(/<br>/g, '<br>');
+    }
+
+    function renderSkills() {
+      const container = document.getElementById('skills-container');
+      if (!container) return;
+      container.innerHTML = DATA.skills.map(s =>
+        `<span class="skill-tag">${escapeHTML(s)}</span>`
+      ).join('');
+    }
+
+    function renderQRCode() {
+      document.getElementById('qr-image').src = DATA.qrCode.image;
+      document.getElementById('qr-guide-text').textContent = DATA.qrCode.guideText;
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('categories-container');
+      const empty = document.getElementById('categories-empty');
+      const visible = DATA.categories.filter(c => c.works && c.works.length > 0);
+
+      if (visible.length === 0) {
+        container.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      container.innerHTML = visible.map((cat, catIdx) => {
+        const accentVar = `var(--accent-${cat.accentClass})`;
+        const count = cat.works.length;
+
+        return `
+        <section id="section-${cat.id}" style="margin-bottom:3.5rem;" class="reveal-up">
+          <!-- Category header -->
+          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.35rem;">
+            <span class="accent-indicator">
+              <span class="accent-line" style="background:${accentVar};"></span>
+            </span>
+            <h3 style="font-family:var(--font-heading);font-weight:600;font-size:1.2rem;letter-spacing:0.01em;">${escapeHTML(cat.name)}</h3>
+            <span style="font-size:0.7rem;color:var(--color-text-soft);font-weight:400;">${count} 件作品</span>
+          </div>
+          <p style="font-size:0.8rem;color:var(--color-text-muted);margin-bottom:1.5rem;font-weight:350;">
+            ${escapeHTML(cat.description)}
+          </p>
+
+          <!-- Bento grid -->
+          <div class="bento-grid reveal-stagger">
+            ${cat.works.map((work, idx) => `
+              <article class="bento-item">
+                <div class="card-shell">
+                  <div class="card-core" style="display:flex;flex-direction:column;height:100%;">
+                    <div class="img-wrapper" data-lightbox-img="${escapeHTML(work.thumb)}"
+                         data-lightbox-caption="${escapeHTML(work.title)} — ${escapeHTML(work.description)}"
+                         title="点击放大查看">
+                      <img src="${escapeHTML(work.thumb)}" alt="${escapeHTML(work.title)}" loading="lazy">
+                    </div>
+                    <div style="padding:1.1rem 1.2rem;flex:1;display:flex;flex-direction:column;">
+                      <div style="width:22px;height:2.5px;border-radius:1px;margin-bottom:0.6rem;background:${accentVar};"></div>
+                      <h4 style="font-family:var(--font-heading);font-weight:600;font-size:1rem;line-height:1.35;margin-bottom:0.4rem;">${escapeHTML(work.title)}</h4>
+                      <p style="font-size:0.78rem;color:var(--color-text-muted);line-height:1.65;flex:1;font-weight:350;">${escapeHTML(work.description)}</p>
+                      ${work.link ? `
+                      <a href="${escapeHTML(work.link)}" target="_blank" rel="noopener"
+                         style="display:inline-flex;align-items:center;gap:0.35rem;margin-top:0.75rem;font-size:0.75rem;font-weight:500;letter-spacing:0.03em;color:${accentVar};text-decoration:none;">
+                        查看详情
+                        <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,0.04);font-size:0.7rem;transition:transform 0.4s cubic-bezier(0.32,0.72,0,1);">→</span>
+                      </a>
+                      ` : ''}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+        </section>`;
+      }).join('');
+    }
+
+    function renderFooter() {
+      document.getElementById('footer-name').textContent = DATA.footerName;
+      document.getElementById('footer-year').textContent = DATA.footerYear;
+    }
+
+    // ============================================================
+    //  INTERACTIONS — Only transform + opacity (Section 6)
+    // ============================================================
+
+    /** QR zoom */
+    function setupQRZoom() {
+      const img = document.getElementById('qr-image');
+      const overlay = document.getElementById('qr-overlay');
+      const overlayImg = document.getElementById('qr-overlay-img');
+
+      function open(src) {
+        overlayImg.src = src;
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+      img.addEventListener('click', () => open(DATA.qrCode.image));
+      document.getElementById('btn-zoom-qr').addEventListener('click', () => open(DATA.qrCode.image));
+      overlay.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    }
+
+    /** Lightbox */
+    function setupLightbox() {
+      const overlay = document.getElementById('lightbox-overlay');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const container = document.getElementById('categories-container');
+
+      function open(src, caption) {
+        lightboxImg.src = src;
+        lightboxCaption.textContent = caption;
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+      container.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-lightbox-img]');
+        if (!trigger) return;
+        open(trigger.getAttribute('data-lightbox-img'), trigger.getAttribute('data-lightbox-caption') || '');
+      });
+      overlay.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    }
+
+    /** Nav scroll shadow */
+    function setupNavScroll() {
+      const nav = document.getElementById('nav-pill');
+      let ticking = false;
+      function update() {
+        nav.classList.toggle('scrolled', window.scrollY > 20);
+        ticking = false;
+      }
+      window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(update); ticking = true; }
+      }, { passive: true });
+    }
+
+    /** Active nav link detection via IntersectionObserver */
+    function setupNavHighlight() {
+      const links = document.querySelectorAll('.nav-link[data-nav]');
+      if (!links.length) return;
+      const observer = new IntersectionObserver((entries) => {
+        let activeId = null;
+        entries.forEach(e => { if (e.isIntersecting && e.intersectionRatio > 0.2) activeId = e.target.id.replace('section-', ''); });
+        if (activeId) {
+          links.forEach(l => l.classList.toggle('active', l.getAttribute('data-nav') === activeId));
+        }
+      }, { threshold: [0.2, 0.5] });
+      DATA.categories.forEach(c => {
+        const el = document.getElementById('section-' + c.id);
+        if (el) observer.observe(el);
+      });
+    }
+
+    /** Scroll entry reveal — IntersectionObserver, no scroll listeners */
+    function setupScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal-up, .reveal-stagger').forEach(el => observer.observe(el));
+
+      // Re-scan after render (MutationObserver)
+      const mo = new MutationObserver(() => {
+        document.querySelectorAll('.reveal-up:not(.visible), .reveal-stagger:not(.visible)').forEach(el => {
+          if (!el.dataset.revealObserved) {
+            el.dataset.revealObserved = '1';
+            observer.observe(el);
+          }
+        });
+      });
+      mo.observe(document.getElementById('categories-container'), { childList: true, subtree: true });
+    }
+
+    // ============================================================
+    //  UTILITY
+    // ============================================================
+    function escapeHTML(str) {
+      const div = document.createElement('div');
+      div.textContent = String(str);
+      return div.innerHTML;
+    }
+
+    // ============================================================
+    //  INIT
+    // ============================================================
+    function init() {
+      renderHeader();
+      renderProfile();
+      renderSkills();
+      renderQRCode();
+      renderCategories();
+      renderFooter();
+      setupQRZoom();
+      setupLightbox();
+      setupNavScroll();
+      setupNavHighlight();
+      setupScrollReveal();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    window.DATA = DATA;
+    window.renderAll = init;
+  })();
+  </script>
+
+  <!--
+    ================================================================
+    📖  使用说明
+
+    一、修改自我介绍
+       DATA.profile: name / title / bio
+
+    二、更换头像
+       DATA.profile.avatar → 你的头像路径
+
+    三、更换二维码
+       DATA.qrCode.image → 二维码图片路径
+
+    四、新增/修改作品
+       在 DATA.categories[板块].works 数组中添加：
+         { title: '标题', thumb: '图片路径', description: '描述', link: '' }
+
+    五、修改配色
+       在 :root 中修改 CSS 变量：
+         --accent-graphic  → 平面设计点缀色
+         --accent-space    → 空间设计点缀色
+         --accent-product  → 产品展示点缀色
+         --accent-interior → 室内设计点缀色
+         --color-bg        → 背景色
+         --color-text      → 主文字色
+
+    六、调整动画强度
+       修改 MOTION_INTENSITY 对应的 cubic-bezier 时长变量
+       减少动画：把 transition duration 从 0.7s 降到 0.3s
+    ================================================================
+  -->
+</body>
+</html>
